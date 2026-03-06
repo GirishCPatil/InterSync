@@ -7,6 +7,23 @@ if (!token) {
     window.location.href = './login.html';
 }
 
+// ── Fetch fresh user data from DB to keep localStorage in sync ──
+(async () => {
+    try {
+        const res = await axios.get(`${BASE_URL}/api/users/profile`, {
+            headers: { Authorization: token }
+        });
+        const freshUser = res.data;
+        // Update localStorage with latest DB values
+        user.resumeAnalysisCount = freshUser.resumeAnalysisCount || 0;
+        user.isPremium = freshUser.isPremium;
+        localStorage.setItem('user', JSON.stringify(user));
+        updateResumeLimitUI();
+    } catch (err) {
+        console.error('Failed to sync user profile:', err);
+    }
+})();
+
 // ── Socket.io Setup for Online Presence & Calling ──
 const socket = io(BASE_URL);
 let currentCallPeerId = null;

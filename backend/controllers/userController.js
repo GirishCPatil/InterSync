@@ -61,7 +61,8 @@ const loginUser = async (req, res) => {
                 skills: user.skills,
                 targetCompanies: user.targetCompanies,
                 peerRating: user.peerRating,
-                isPremium: user.isPremium
+                isPremium: user.isPremium,
+                resumeAnalysisCount: user.resumeAnalysisCount
             }
         });
 
@@ -81,7 +82,8 @@ const getProfile = async (req, res) => {
             skills: user.skills,
             targetCompanies: user.targetCompanies,
             peerRating: user.peerRating,
-            isPremium: user.isPremium
+            isPremium: user.isPremium,
+            resumeAnalysisCount: user.resumeAnalysisCount
         });
     } catch (error) {
         console.error(error);
