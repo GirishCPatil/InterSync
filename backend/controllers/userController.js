@@ -124,6 +124,14 @@ const ratePeer = async (req, res) => {
 
 const getLeaderboard = async (req, res) => {
     try {
+        // Only premium users can access the leaderboard
+        if (!req.user.isPremium) {
+            return res.status(403).json({
+                success: false,
+                message: 'Leaderboard is a premium feature. Please upgrade to access it.'
+            });
+        }
+
         // Find top 10 users ranked by ratingCount DESC (which corresponds to interviews given)
         // Then by peerRating DESC
         const topPeers = await User.find({})
